@@ -2,19 +2,21 @@ import React, { PropTypes as T } from 'react';
 import styles from './styles.module.css';
 import classNames from 'classnames';
 
-const Train = ({ id, line, status, canEdit, updateTrains }) => {
+const Train = ({ id, line, status, token, canEdit, updateTrains }) => {
 
   const updateStatus = (event) => {
     const value = event.target.value;
     const trainId = event.target.dataset.trainid;
 
-    fetch(`/api/v1/trains/${trainId}`, {
+    fetch(`/api/v1/trains/${trainId}?token=${token}`, {
       method: 'PATCH',
-      body: JSON.stringify({ 
-        train: { status: value }
+      body: JSON.stringify({
+        train: { status: value },
+        // token
       }),
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        // 'Authorization': token
       }
     })
     .then(response => response.json())

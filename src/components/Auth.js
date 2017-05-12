@@ -4,16 +4,27 @@ import styles from './styles.module.css';
 
 const Auth = ({ username }) => {
 
+  const logOut = (e) => {
+  e.preventDefault();
+  localStorage.removeItem('token');
+  localStorage.removeItem('username');
+  updateAuthStatus({
+    loggedIn: false,
+    username: '',
+    token: ''
+  }, 'login');
+}
+
   return (
     <div className={styles.auth}>
-      { username && 
+      { username &&
         <p>
-          Logged in as {username}. 
-          <a href="#">Logout</a> 
+          Logged in as {username}.
+          <a href="#">Logout</a>
         </p>
       }
 
-      { !username && 
+      { !username &&
         <Link to="/login/">login</Link>
       }
     </div>
